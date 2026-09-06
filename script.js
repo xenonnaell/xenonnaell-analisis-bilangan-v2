@@ -1,17 +1,187 @@
-document.addEventListener('DOMContentLoaded',()=>{
-const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
-function fishSVG(color='#FFD97D',scale=1){return `<svg viewBox="0 0 10 6" width="${48*scale}" height="${29*scale}" aria-hidden="true"><rect x="1" y="2" width="5" height="2" fill="${color}"/><rect x="0" y="1" width="1" height="1" fill="${color}"/><rect x="0" y="4" width="1" height="1" fill="${color}"/><rect x="6" y="1" width="1" height="1" fill="${color}"/><rect x="6" y="4" width="1" height="1" fill="${color}"/><rect x="7" y="2" width="2" height="2" fill="${color}"/><rect x="2" y="2" width="1" height="1" fill="#062038"/></svg>`}
-(function(){const s=$('#loadingScreen'),t=$('#loadingTrack'),b=$('#loadingBarFill'),w=$('#loadingWhale'),l=$('#loadingLabel'),d=$('#loadingDecor');if(!s||!t||!b||!w||!l)return;let p=0,done=false;const syms=['√','i','+','−','=','z=a+bi'];function add(){if(done||!d)return;const e=document.createElement('span');e.className='loading-symbol';e.textContent=syms[Math.floor(Math.random()*syms.length)];e.style.left=Math.random()*96+'%';e.style.fontSize=.55+Math.random()*.7+'rem';e.style.animationDuration=3.8+Math.random()*2.4+'s';d.appendChild(e);setTimeout(()=>e.remove(),7000)}const st=setInterval(add,420);function place(v){const m=Math.max(0,t.clientWidth-w.offsetWidth);w.style.left=v/100*m+'px'}const start=performance.now();function frame(now){if(done)return;const q=Math.min(1,(now-start)/1900),e=1-Math.pow(1-q,2);p=e*100;b.style.width=p+'%';l.textContent='LOADING... '+Math.floor(p)+'%';place(p);if(q<1)requestAnimationFrame(frame);else{done=true;clearInterval(st);p=100;b.style.width='100%';place(100);l.textContent='COMPLETE';setTimeout(()=>{s.classList.add('loading-done');setTimeout(()=>s.style.display='none',600)},350)}}place(0);requestAnimationFrame(frame);addEventListener('resize',()=>place(p))})();
-(function(){const h=$('#hamburgerBtn'),m=$('#navMenu'),o=$('#menuOverlay');function close(){m?.classList.remove('open');o?.classList.add('hidden');h?.classList.remove('open');h?.setAttribute('aria-expanded','false')}function open(){m?.classList.add('open');o?.classList.remove('hidden');h?.classList.add('open');h?.setAttribute('aria-expanded','true')}function go(name){$$('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===name));close();document.querySelector('.page.active')?.scrollTo(0,0)}h?.addEventListener('click',()=>m?.classList.contains('open')?close():open());o?.addEventListener('click',close);$$('.nav-item,[data-page]').forEach(x=>x.addEventListener('click',e=>{e.preventDefault();go(x.dataset.page)}));$('#exploreBtn')?.addEventListener('click',()=>open())})();
-(function(){const o=$('#ambientOcean');if(!o)return;for(let i=0;i<18;i++){const b=document.createElement('div');b.className='amb-bubble';const z=6+Math.random()*15;b.style.width=b.style.height=z+'px';b.style.left=Math.random()*100+'vw';b.style.setProperty('--drift',Math.random()*50-25+'px');b.style.animationDuration=7+Math.random()*8+'s';b.style.animationDelay=Math.random()*8+'s';o.appendChild(b)}const c=['#FF9AA2','#FFD97D','#7FE3D0','#F4FBFB','#9FD1FF'];for(let i=0;i<5;i++){const f=document.createElement('div');f.className='amb-fish';f.innerHTML=fishSVG(c[i],.72+Math.random()*.55);f.style.top=8+Math.random()*76+'vh';f.style.animationDuration=16+Math.random()*13+'s';f.style.animationDelay=Math.random()*-12+'s';o.appendChild(f)}const s=['+','−','×','÷','=','i','π','√'];for(let i=0;i<8;i++){const e=document.createElement('div');e.className='amb-math';e.textContent=s[i];e.style.left=Math.random()*93+'vw';e.style.top=7+Math.random()*81+'vh';e.style.fontSize=10+Math.random()*8+'px';e.style.animationDuration=4+Math.random()*4+'s';e.style.animationDelay=Math.random()*3+'s';o.appendChild(e)}})();
-function simplify(n){let r=Math.abs(Math.trunc(n)),f=1;for(let i=2;i*i<=r;i++)while(r%(i*i)===0){r/=i*i;f*=i}return{factor:f,remainder:r}}
-function split(raw){let s=raw.replace(/\s+/g,'').replace(/−/g,'-');if(!s)return[];if(!'+-'.includes(s[0]))s='+'+s;let out=[],buf='';for(const c of s){if('+-'.includes(c)&&buf&&!buf.endsWith('√')){out.push(buf);buf=c}else buf+=c}if(buf)out.push(buf);return out}
-const re=/^([+-])(\d*)(?:√(-)?(\d+))?(i)?$/u;
-function term(x){const m=re.exec(x);if(!m)return null;const sg=m[1]==='-'?-1:1,coef=m[2]?+m[2]:1,neg=m[3]==='-',rad=m[4]?+m[4]:null,hasI=!!m[5];if(rad===null&&!m[2]&&!hasI)return null;if(rad!==null){const q=simplify(rad),v=sg*coef*q.factor;if(q.remainder===1)return{imag:neg||hasI,const:1,value:v};return{imag:neg||hasI,const:0,coef:v,rad:q.remainder}}return{imag:hasI,const:1,value:sg*coef}}
-function agg(a){let c=0,r=new Map;for(const x of a)x.const?c+=x.value:r.set(x.rad,(r.get(x.rad)||0)+x.coef);for(const [k,v] of r)if(!v)r.delete(k);return{c,r}}
-function render(m){let p=[];if(m.c)p.push({v:m.c,r:null});[...m.r.keys()].sort((a,b)=>a-b).forEach(r=>{const v=m.r.get(r);if(v)p.push({v,r})});if(!p.length)return'0';return p.map((x,i)=>{const a=Math.abs(x.v),core=x.r===null?String(a):(a===1?'√'+x.r:a+'√'+x.r);return i===0?(x.v<0?'-':'')+core:(x.v<0?' - ':' + ')+core}).join('')}
-function zero(m){if(m.c)return false;for(const v of m.r.values())if(v)return false;return true}
-function analyze(s){const ts=split(s);if(!ts.length)throw Error('Input kosong. Coba tulis sesuatu, misalnya 3+4i');const R=[],I=[];for(const x of ts){const q=term(x);if(!q)throw Error('Bagian "'+x+'" tidak dikenali. Contoh: 3+4i, √-16, 2√3, √12+√-18');(q.imag?I:R).push(q)}const ra=agg(R),ia=agg(I),a=render(ra),bb=render(ia),az=zero(ra),bz=zero(ia);let jenis=az&&bz?'ZERO':bz?'REAL':az?'IMAGINARY':'COMPLEX',core=bb==='1'?'':bb==='-1'?'-':bb,z=jenis==='ZERO'?'0':jenis==='REAL'?a:jenis==='IMAGINARY'?(core==='-'?'-i':(core||'')+'i'):(core.startsWith('-')?a+' - '+core.slice(1)+'i':a+' + '+core+'i');return{z,a,b:bb,jenis}}
-(function(){const i=$('#complexInput'),b=$('#analyzeBtn'),r=$('#resultBox'),e=$('#errorBox');if(!i||!b)return;function run(){r.style.display='none';e.style.display='none';try{const x=analyze(i.value.trim());$('#outZ').textContent='z = '+x.z;$('#outA').textContent=x.a;$('#outB').textContent=x.b;$('#outJenis').textContent=x.jenis;$('#outJenis').className='jenis-badge jenis-'+x.jenis.toLowerCase();r.style.display='block'}catch(ex){e.textContent=ex.message;e.style.display='block'}}b.addEventListener('click',run);i.addEventListener('keydown',e=>e.key==='Enter'&&run());$$('.example-chip').forEach(x=>x.addEventListener('click',()=>{i.value=x.dataset.example;run();i.focus()}))})();
-(function(){const area=$('#gameArea'),fish=$('#gameFish'),layer=$('#gameItems'),start=$('#startGame'),score=$('#gameScore'),level=$('#gameLevel'),msg=$('#gameMessage'),hint=$('#gameHint');if(!area||!fish||!layer||!start)return;const g={run:0,score:0,level:1,x:.15,y:.5,size:1,pid:null,items:[],raf:0};function draw(){const col=g.level>=5?'#7FE3D0':g.level>=3?'#FFD97D':'#FF9AA2',scale=g.level>=5?1.45:1+Math.min(.45,(g.level-1)*.12);fish.innerHTML=fishSVG(col,scale);fish.style.width=48*scale+'px';fish.style.height=29*scale+'px';fish.style.left=g.x*100+'%';fish.style.top=g.y*100+'%'}function spawn(){if(!g.run||g.items.length>=8)return;const e=document.createElement('div');e.className='math-item';e.textContent=['+','√','i','2','3','='][Math.floor(Math.random()*6)];e.style.left=9+Math.random()*82+'%';e.style.top=14+Math.random()*72+'%';layer.appendChild(e);g.items.push(e)}function hit(a,b){return!(a.right<b.left||a.left>b.right||a.bottom<b.top||a.top>b.bottom)}function tick(){if(!g.run)return;const a=fish.getBoundingClientRect();for(let n=g.items.length-1;n>=0;n--){const e=g.items[n];if(hit(a,e.getBoundingClientRect())){e.remove();g.items.splice(n,1);g.score++;g.level=Math.floor(g.score/5)+1;draw();score.textContent=g.score;level.textContent=g.level;msg.textContent=g.level>=5?'PAUS MODE! Kamu sudah jadi raksasa laut.':'Kumpulkan '+g.level*5+' item untuk naik level.'}}g.raf=requestAnimationFrame(tick)}function reset(){g.run=1;g.score=0;g.level=1;g.x=.15;g.y=.5;g.items.forEach(x=>x.remove());g.items=[];score.textContent='0';level.textContent='1';msg.textContent='Kumpulkan 5 item untuk naik level.';start.textContent='RESTART GAME';draw();for(let i=0;i<5;i++)spawn();cancelAnimationFrame(g.raf);g.raf=requestAnimationFrame(tick)}function move(x,y){const r=area.getBoundingClientRect();g.x=Math.max(.08,Math.min(.92,(x-r.left)/r.width));g.y=Math.max(.12,Math.min(.88,(y-r.top)/r.height));draw()}start.addEventListener('click',reset);area.addEventListener('pointerdown',e=>{if(!g.run)return;g.pid=e.pointerId;area.setPointerCapture(e.pointerId);hint.style.display='none';move(e.clientX,e.clientY)});area.addEventListener('pointermove',e=>{if(e.pointerId===g.pid)move(e.clientX,e.clientY)});const up=e=>{if(e.pointerId===g.pid)g.pid=null};area.addEventListener('pointerup',up);area.addEventListener('pointercancel',up);setInterval(()=>g.run&&spawn(),1100);draw()})();
-});
+(function initLoading(){
+
+  const screen = document.getElementById("loadingScreen");
+  const track = document.getElementById("loadingTrack");
+  const bar = document.getElementById("loadingBarFill");
+  const whale = document.getElementById("loadingWhale");
+  const label = document.getElementById("loadingLabel");
+  const decor = document.getElementById("loadingDecor");
+
+  if (!screen || !track || !bar || !whale || !label || !decor) return;
+
+  let progress = 0;
+  let finished = false;
+
+  function placeWhale(value){
+    const trackWidth = track.clientWidth;
+    const whaleWidth = whale.offsetWidth;
+
+    const maxLeft = Math.max(
+      0,
+      trackWidth - whaleWidth
+    );
+
+    whale.style.left =
+      (value / 100) * maxLeft + "px";
+  }
+
+  function createBubble(amount = 3){
+
+    const whaleRect = whale.getBoundingClientRect();
+    const screenRect = screen.getBoundingClientRect();
+
+    for(let i = 0; i < amount; i++){
+
+      const bubble = document.createElement("img");
+
+      bubble.src = "bubble.png";
+      bubble.className = "loading-bubble";
+      bubble.alt = "";
+
+      const startX =
+        whaleRect.left -
+        screenRect.left +
+        whaleRect.width * (0.58 + Math.random() * 0.20);
+
+      const startY =
+        whaleRect.top -
+        screenRect.top +
+        whaleRect.height * (0.05 + Math.random() * 0.15);
+
+      const size =
+        8 + Math.random() * 14;
+
+      const drift =
+        (Math.random() * 70 - 35) + "px";
+
+      const rise =
+        -(70 + Math.random() * 100) + "px";
+
+      const duration =
+        (1.7 + Math.random() * 1.2) + "s";
+
+      bubble.style.left = startX + "px";
+      bubble.style.top = startY + "px";
+      bubble.style.width = size + "px";
+      bubble.style.height = size + "px";
+
+      bubble.style.setProperty(
+        "--bubble-drift",
+        drift
+      );
+
+      bubble.style.setProperty(
+        "--bubble-rise",
+        rise
+      );
+
+      bubble.style.setProperty(
+        "--bubble-duration",
+        duration
+      );
+
+      decor.appendChild(bubble);
+
+      setTimeout(() => {
+        bubble.remove();
+      }, 3200);
+    }
+  }
+
+  const bubbleTimer = setInterval(() => {
+
+    if(finished) return;
+
+    createBubble(
+      Math.random() > .45 ? 2 : 3
+    );
+
+  }, 650);
+
+  function update(value){
+
+    progress = Math.min(100,value);
+
+    bar.style.width =
+      progress + "%";
+
+    label.textContent =
+      "LOADING... " +
+      Math.floor(progress) +
+      "%";
+
+    placeWhale(progress);
+  }
+
+  const startTime = performance.now();
+  const duration = 2400;
+
+  function animate(now){
+
+    if(finished) return;
+
+    const elapsed =
+      now - startTime;
+
+    const raw =
+      Math.min(1,elapsed / duration);
+
+    const eased =
+      1 - Math.pow(1 - raw,3);
+
+    update(eased * 100);
+
+    if(raw < 1){
+
+      requestAnimationFrame(animate);
+
+    }else{
+
+      finished = true;
+
+      clearInterval(bubbleTimer);
+
+      progress = 100;
+
+      update(100);
+
+      createBubble(5);
+
+      label.textContent =
+        "COMPLETE";
+
+      setTimeout(() => {
+
+        screen.classList.add(
+          "loading-done"
+        );
+
+        setTimeout(() => {
+
+          screen.style.display =
+            "none";
+
+          const app =
+            document.getElementById("pages");
+
+          if(app){
+            document.body.style.overflow =
+              "auto";
+          }
+
+        },600);
+
+      },500);
+    }
+  }
+
+  placeWhale(0);
+
+  window.addEventListener(
+    "resize",
+    () => placeWhale(progress)
+  );
+
+  requestAnimationFrame(animate);
+
+})();
