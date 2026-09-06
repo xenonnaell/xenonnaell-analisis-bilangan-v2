@@ -1,89 +1,76 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#061b3a">
-  <title>Complex Sea — Analisis Bilangan Kompleks</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#062038">
+<title>Ocean Complex Lab — Analisis Bilangan Kompleks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="loading-screen" aria-live="polite">
-    <div id="loading-decor" aria-hidden="true"></div>
-    <div class="loading-content">
-      <div class="loading-brand">COMPLEX SEA</div>
-      <div id="whale-track" class="whale-track">
-        <img id="loading-whale" data-remove-bg src="pauslockscreen.png" alt="Paus pixel-art">
+<div id="loadingScreen" aria-live="polite">
+  <div id="loadingDecor" aria-hidden="true"></div>
+  <div class="loading-inner">
+    <div class="loading-brand pixel-text">COMPLEX SEA</div>
+    <div id="loadingTrack" class="loading-track">
+      <div id="loadingBarFill" class="loading-bar-fill"></div>
+      <div id="loadingWhale" class="loading-whale" aria-hidden="true">
+        <svg viewBox="0 0 24 12" width="120" height="60" class="pixel-svg">
+          <rect x="0" y="3" width="2" height="2" fill="#7FE3D0"/><rect x="0" y="7" width="2" height="2" fill="#7FE3D0"/><rect x="2" y="5" width="2" height="2" fill="#7FE3D0"/><rect x="4" y="4" width="14" height="1" fill="#7FE3D0"/><rect x="3" y="5" width="17" height="3" fill="#7FE3D0"/><rect x="4" y="8" width="13" height="1" fill="#7FE3D0"/><rect x="20" y="5" width="2" height="2" fill="#7FE3D0"/><rect x="22" y="6" width="1" height="1" fill="#7FE3D0"/><rect x="9" y="2" width="3" height="2" fill="#7FE3D0"/><rect x="19" y="6" width="1" height="1" fill="#062038"/><rect x="14" y="1" width="1" height="1" fill="#9FE8FF"/><rect x="14" y="0" width="1" height="1" fill="#9FE8FF"/>
+        </svg>
       </div>
-      <div class="progress-shell" aria-label="Loading"><div id="progress-bar"></div></div>
-      <div class="loading-status"><span id="loading-label">LOADING<span id="loading-dots">...</span></span><span id="loading-percent">0%</span></div>
     </div>
+    <div id="loadingLabel" class="loading-label pixel-text">LOADING... 0%</div>
   </div>
+</div>
 
-  <main id="app" class="app hidden">
-    <section id="landing-page" class="page active-page">
-      <div class="ocean-sky"></div><div class="sun-glow"></div><div class="sea-floor"></div><div class="tiny-bubbles" id="landing-bubbles"></div>
-      <header class="topbar"><div class="brand-mark">COMPLEX<br>SEA</div><button id="hamburger-btn" class="icon-btn" type="button" aria-label="Buka menu">☰</button></header>
-      <div class="landing-creatures" aria-hidden="true">
-        <img id="fish-right" class="creature fish-right" src="ikankanan1.jpg" alt="">
-        <img id="fish-left" class="creature fish-left" src="ikankiri1.jpg" alt="">
-        <img class="creature ray" data-remove-bg src="ikanpari.jpg" alt="">
-        <img class="creature diver" data-remove-bg src="penyukanan.jpg" alt="">
-        <img class="creature jelly" data-remove-bg src="ubur-ubur.png" alt="">
+<button id="hamburgerBtn" class="hamburger-btn" aria-label="Buka menu" aria-expanded="false" type="button"><span></span><span></span><span></span></button>
+<nav id="navMenu" class="nav-menu" aria-label="Navigasi">
+  <a href="#" data-page="landing" class="nav-item">🏠 Beranda</a>
+  <a href="#" data-page="calculator" class="nav-item">🧮 Calculator</a>
+  <a href="#" data-page="about" class="nav-item">📘 About</a>
+  <a href="#" data-page="game" class="nav-item">🎮 Game</a>
+  <a href="#" data-page="credit" class="nav-item">🐚 Credit</a>
+</nav>
+
+<div id="ambientOcean" aria-hidden="true"></div><div class="sand-strip" aria-hidden="true"></div>
+
+<main id="pages">
+  <section class="page active" data-page="landing">
+    <div class="landing-bg"></div><div class="landing-vignette"></div>
+    <div class="landing-content">
+      <div class="landing-badge pixel-text">MATH • OCEAN • PIXEL WORLD</div>
+      <h1 class="pixel-text hero-title">OCEAN<br><span>COMPLEX LAB</span></h1>
+      <p class="hero-sub">Menyelami bilangan kompleks di kedalaman laut pixel.</p>
+      <button class="swipe-hint pixel-text" id="exploreBtn" type="button">▼ SWIPE TO EXPLORE ▼</button>
+    </div>
+  </section>
+
+  <section class="page" data-page="calculator">
+    <div class="page-inner"><h2 class="pixel-text page-title">🧮 Calculator</h2><p class="page-desc">Masukkan bilangan kompleks, lalu tekan ANALYZE.</p>
+      <div class="calc-card">
+        <label for="complexInput" class="calc-label">Masukkan bilangan</label>
+        <div class="input-row"><input type="text" id="complexInput" class="calc-input" placeholder="contoh: 3+4i atau √12+√-18" autocomplete="off"><button id="analyzeBtn" class="analyze-btn pixel-text" type="button">ANALYZE</button></div>
+        <div class="example-chips"><button type="button" class="example-chip" data-example="3+4i">3+4i</button><button type="button" class="example-chip" data-example="√-16">√-16</button><button type="button" class="example-chip" data-example="2√3">2√3</button><button type="button" class="example-chip" data-example="√12+√-18">√12+√-18</button><button type="button" class="example-chip" data-example="√187-√-9087+678">√187-√-9087+678</button></div>
+        <div id="errorBox" class="error-box" role="alert"></div>
+        <div id="resultBox" class="result-box"><div class="result-z pixel-text" id="outZ">z = ...</div><div class="result-row"><span>Bagian real (a)</span><strong id="outA">-</strong></div><div class="result-row"><span>Bagian imajiner (b)</span><strong id="outB">-</strong></div><div class="result-row"><span>Jenis bilangan</span><strong id="outJenis" class="jenis-badge">-</strong></div></div>
       </div>
-      <div class="hero">
-        <div class="hero-kicker">MATH • OCEAN • PIXEL WORLD</div>
-        <h1>ANALISIS<br><span>BILANGAN KOMPLEKS</span></h1>
-        <p>Masuk ke dunia bawah laut, lalu jelajahi bilangan kompleks.</p>
-        <button id="explore-btn" class="pixel-button" type="button">SWIPE TO EXPLORE</button>
-        <div class="swipe-hint">☰ buka menu untuk mulai</div>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="calculator-page" class="page content-page"><div class="page-inner">
-      <button class="back-button" data-page="landing-page" type="button">← HOME</button>
-      <div class="section-heading"><div class="eyebrow">CALCULATOR</div><h2>Analisis Bilangan</h2><p>Masukkan bentuk bilangan kompleks yang ingin dianalisis.</p></div>
-      <form id="calculator-form" class="calculator-card">
-        <label for="complex-input">INPUT</label>
-        <div class="input-row"><input id="complex-input" type="text" autocomplete="off" placeholder="Contoh: √12 + √-18"><button id="analyze-button" class="pixel-button" type="submit">ANALYZE</button></div>
-        <div class="examples"><span>contoh:</span><button type="button" class="example-chip" data-example="3+4i">3+4i</button><button type="button" class="example-chip" data-example="√12+√-18">√12+√-18</button><button type="button" class="example-chip" data-example="√187-√-9087+678">√187-√-9087+678</button></div>
-        <div id="calculator-error" class="error-box hidden"></div>
-        <div id="result" class="result-panel hidden">
-          <div class="result-top"><span>HASIL ANALISIS</span><span id="result-type" class="type-badge">COMPLEX</span></div>
-          <div class="standard-box"><div class="result-label">BENTUK STANDAR</div><div id="standard-form" class="standard-form">z = 0</div></div>
-          <div class="result-grid"><div class="result-box"><div class="result-label">BAGIAN REAL</div><div id="real-part">0</div></div><div class="result-box"><div class="result-label">BAGIAN IMAJINER</div><div id="imaginary-part">0</div></div></div>
-        </div>
-      </form>
-    </div></section>
+  <section class="page" data-page="about">
+    <div class="page-inner"><h2 class="pixel-text page-title">📘 About</h2><div class="about-card"><p>Bilangan kompleks terdiri dari bagian <strong>real</strong> dan <strong>imajiner</strong>, ditulis dalam bentuk:</p><p class="formula pixel-text">z = a + bi</p><ul class="about-list"><li><strong>a</strong> adalah bagian real.</li><li><strong>b</strong> adalah koefisien dari bagian imajiner.</li><li><strong>i</strong> adalah satuan imajiner dengan <strong>i² = −1</strong>.</li></ul><p>Website ini mengelompokkan bilangan menjadi empat kategori:</p><div class="classification-grid"><div><strong>ZERO</strong><span>a = 0 dan b = 0</span></div><div><strong>REAL</strong><span>b = 0 dan a ≠ 0</span></div><div><strong>IMAGINARY</strong><span>a = 0 dan b ≠ 0</span></div><div><strong>COMPLEX</strong><span>a ≠ 0 dan b ≠ 0</span></div></div></div><div class="features-wrap"><article class="feature-card"><div class="feature-icon">🪼</div><h3>Berbagai bentuk</h3><p>Angka biasa, i, dan bentuk akar dapat dianalisis.</p></article><article class="feature-card"><div class="feature-icon">√</div><h3>Simbolik</h3><p>Akar disederhanakan tanpa diubah menjadi desimal.</p></article><article class="feature-card"><div class="feature-icon">🐟</div><h3>Interactive</h3><p>Jelajahi dunia bawah laut sambil belajar.</p></article><article class="feature-card"><div class="feature-icon">🐚</div><h3>Mobile first</h3><p>Dirancang nyaman digunakan dari HP Android.</p></article></div></div>
+  </section>
 
-    <section id="about-page" class="page content-page"><div class="page-inner">
-      <button class="back-button" data-page="landing-page" type="button">← HOME</button>
-      <div class="section-heading"><div class="eyebrow">ABOUT</div><h2>Bilangan Kompleks</h2><p>Pahami konsep dasarnya sebelum memakai analyzer.</p></div>
-      <div class="info-grid">
-        <article class="info-card"><div class="info-icon">z</div><h3>Bentuk Umum</h3><p>Bilangan kompleks ditulis sebagai <strong>z = a + bi</strong>.</p></article>
-        <article class="info-card"><div class="info-icon">a</div><h3>Bagian Real</h3><p><strong>a</strong> adalah bagian real.</p></article>
-        <article class="info-card"><div class="info-icon">bi</div><h3>Bagian Imajiner</h3><p><strong>b</strong> adalah koefisien yang dikalikan dengan <strong>i</strong>.</p></article>
-        <article class="info-card"><div class="info-icon">i</div><h3>Unit Imajiner</h3><p>Unit imajiner memenuhi <strong>i² = −1</strong>.</p></article>
-      </div>
-      <div class="classification-card"><h3>Klasifikasi</h3><div class="classification-list"><div><span>ZERO</span><small>a = 0 dan b = 0</small></div><div><span>REAL</span><small>b = 0 dan a ≠ 0</small></div><div><span>IMAGINARY</span><small>a = 0 dan b ≠ 0</small></div><div><span>COMPLEX</span><small>a ≠ 0 dan b ≠ 0</small></div></div></div>
-    </div></section>
+  <section class="page" data-page="game">
+    <div class="page-inner game-page-inner"><h2 class="pixel-text page-title">🎮 Fish &amp; Math</h2><p class="page-desc">Gerakkan ikan, makan simbol matematika, dan tumbuh sampai jadi paus.</p><div class="game-hud"><div>SCORE <strong id="gameScore">0</strong></div><div>LEVEL <strong id="gameLevel">1</strong></div></div><div id="gameArea" class="game-area" aria-label="Area permainan"><div id="gameFish" class="game-fish"></div><div id="gameItems" class="game-items"></div><div id="gameHint" class="game-hint">DRAG IKANNYA</div></div><button id="startGame" class="analyze-btn pixel-text" type="button">START GAME</button><div id="gameMessage" class="game-message">Kumpulkan 5 item untuk naik level.</div></div>
+  </section>
 
-    <section id="game-page" class="page content-page"><div class="page-inner game-inner">
-      <button class="back-button" data-page="landing-page" type="button">← HOME</button>
-      <div class="section-heading"><div class="eyebrow">GAME</div><h2>Fish &amp; Math</h2><p>Makan simbol matematika. Tumbuh dari ikan kecil sampai paus.</p></div>
-      <div class="game-hud"><div>SCORE <strong id="game-score">0</strong></div><div>LEVEL <strong id="game-level">1</strong></div></div>
-      <div id="game-area" class="game-area" tabindex="0"><div class="game-hint">DRAG / SWIPE IKANNYA</div><div id="game-fish" class="game-fish">🐟</div><div id="game-items" class="game-items"></div></div>
-      <button id="start-game" class="pixel-button wide" type="button">START GAME</button><div id="game-message" class="game-message">Kumpulkan 5 item untuk naik level.</div>
-    </div></section>
-
-    <section id="credit-page" class="page content-page"><div class="page-inner credit-inner"><button class="back-button" data-page="landing-page" type="button">← HOME</button><div class="credit-card"><div class="eyebrow">CREDIT</div><h2>Complex Sea</h2><p>Project analisis bilangan kompleks dengan konsep dunia bawah laut retro pixel-art.</p><div class="credit-line">HTML • CSS • JavaScript</div></div></div></section>
-
-    <div id="menu-overlay" class="menu-overlay hidden"></div>
-    <aside id="menu-panel" class="menu-panel" aria-label="Navigasi"><button id="menu-close" class="menu-close" type="button">×</button><div class="menu-title">EXPLORE</div><button class="menu-link" data-page="calculator-page" type="button">CALCULATOR</button><button class="menu-link" data-page="about-page" type="button">ABOUT</button><button class="menu-link" data-page="game-page" type="button">GAME</button><button class="menu-link" data-page="credit-page" type="button">CREDIT</button></aside>
-  </main>
-  <script src="script.js"></script>
+  <section class="page" data-page="credit"><div class="page-inner credit-inner"><h2 class="pixel-text page-title">🐚 Credit</h2><div class="credit-card"><div class="credit-shell">OCEAN<br>COMPLEX LAB</div><p>Project analisis bilangan kompleks yang dikembangkan dari program C menjadi website interaktif bertema underwater retro pixel-art.</p><div class="credit-meta">HTML • CSS • JAVASCRIPT</div></div></div></section>
+</main>
+<script src="script.js"></script>
 </body>
 </html>
