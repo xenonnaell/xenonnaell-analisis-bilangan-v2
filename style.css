@@ -7,9 +7,14 @@ button,input{font-family:inherit}.pixel-text{font-family:'Press Start 2P',monosp
 #loadingScreen.loading-done{opacity:0;visibility:hidden;pointer-events:none}
 #loadingScreen:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(127,227,208,.025) 0 2px,transparent 2px 6px)}
 .loading-inner{position:relative;z-index:5;width:min(84vw,520px);display:flex;flex-direction:column;align-items:center}
-.loading-whale{position:relative!important;left:auto!important;top:auto!important;width:min(210px,48vw)!important;height:140px!important;margin:0 0 10px!important;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:whale-breathe 2.2s ease-in-out infinite}
+.loading-whale{position:relative!important;left:auto!important;top:auto!important;width:min(210px,48vw)!important;height:140px!important;margin:0 0 10px!important;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:whale-breathe 2.6s ease-in-out infinite}
+.loading-whale::before{content:"";position:absolute;inset:-24px;z-index:-1;border-radius:50%;background:radial-gradient(circle,rgba(127,227,208,.4) 0%,rgba(127,227,208,0) 70%);animation:glow-pulse 2.6s ease-in-out infinite}
 .loading-whale img{display:block;width:min(210px,48vw);max-height:140px;height:auto;object-fit:contain;image-rendering:auto;filter:drop-shadow(4px 4px 0 rgba(0,0,0,.2))}
-@keyframes whale-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes whale-breathe{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-7px) rotate(-2deg)}}
+@keyframes glow-pulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+.loading-fish{position:absolute;pointer-events:none;animation:loading-fish-swim ease-in-out infinite}
+.loading-fish svg{display:block;image-rendering:pixelated}
+@keyframes loading-fish-swim{0%,100%{transform:translateX(-30px)}50%{transform:translateX(30px)}}
 .loading-brand{margin:0 0 28px;color:var(--gold);font-size:clamp(14px,3vw,22px);letter-spacing:1px;text-shadow:4px 4px 0 var(--ink),0 0 18px rgba(127,227,208,.28);position:relative;z-index:6}
 .loading-track{position:relative;width:100%;height:28px;border:4px solid var(--seafoam);border-radius:999px;background:#061C31;box-shadow:0 0 0 3px var(--ink),0 0 20px rgba(127,227,208,.25);overflow:visible}
 .loading-bar-fill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:999px;background:repeating-linear-gradient(90deg,#7FE3D0 0 12px,#1C6E8C 12px 24px);box-shadow:inset 0 -3px 0 rgba(6,32,56,.35),0 0 10px rgba(127,227,208,.35);transition:none}
@@ -21,7 +26,10 @@ button,input{font-family:inherit}.pixel-text{font-family:'Press Start 2P',monosp
 @keyframes loading-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 .loading-bubble{position:absolute;z-index:10;object-fit:contain;image-rendering:pixelated;opacity:0;pointer-events:none;animation:bubble-rise var(--bubble-duration,2s) linear forwards}
 @keyframes bubble-rise{0%{opacity:0;transform:translate(0,0) scale(.4)}12%{opacity:.95;transform:translate(0,0) scale(.75)}55%{opacity:.8}100%{opacity:0;transform:translate(var(--bubble-drift,0),var(--bubble-rise,-100px)) scale(1)}}
-#ambientOcean{position:absolute;left:0;right:0;top:0;height:100%;z-index:1;pointer-events:none;overflow:visible}
+#ambientOcean{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.amb-jelly{position:absolute;width:60px;pointer-events:none;animation:jelly-bob ease-in-out infinite;filter:drop-shadow(2px 2px 0 rgba(6,32,56,.2))}
+.amb-jelly img{display:block;width:100%;height:auto}
+@keyframes jelly-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
 .amb-bubble{position:absolute;bottom:-30px;border-radius:50%;border:2px solid rgba(127,227,208,.25);box-shadow:inset -2px -2px 0 rgba(255,255,255,.12);animation:amb-rise linear infinite}
 @keyframes amb-rise{0%{transform:translate(0,0);opacity:.5}100%{transform:translate(var(--drift,20px),-115vh);opacity:0}}
 .amb-fish{position:absolute;opacity:.45;filter:drop-shadow(1px 1px 0 rgba(6,32,56,.25));will-change:transform;pointer-events:none;width:34px}
@@ -33,7 +41,7 @@ button,input{font-family:inherit}.pixel-text{font-family:'Press Start 2P',monosp
 .page{display:block;position:relative;min-height:100vh;min-height:100dvh}
 .page-inner{max-width:760px;margin:0 auto;padding:90px 20px 120px}
 .page-title{font-size:clamp(15px,3vw,20px);color:var(--gold);text-shadow:3px 3px 0 var(--ink);margin:0 0 12px}.page-desc{margin:0 0 20px;opacity:.9;font-size:16px}
-.landing-page{position:relative;z-index:1;background-image:url('background.png');background-size:cover;background-position:center;background-repeat:no-repeat;overflow:hidden}
+.landing-page{position:relative;z-index:1;overflow:hidden}
 .landing-page:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,20,38,.04),rgba(3,20,38,.14) 46%,rgba(3,20,38,.78) 100%);pointer-events:none;z-index:0}
 .landing-math-layer{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}.landing-math-symbol{position:absolute;font-family:'Press Start 2P',monospace;color:rgba(255,217,125,.38);text-shadow:2px 2px 0 rgba(6,32,56,.2);animation:landing-float 6s ease-in-out infinite}.landing-math-formula{position:absolute;font-family:'Press Start 2P',monospace;font-size:clamp(7px,1.25vw,11px);color:rgba(159,232,255,.38);text-shadow:2px 2px 0 rgba(6,32,56,.22);animation:landing-float 7s ease-in-out infinite}@keyframes landing-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-9px) rotate(1deg)}}
 .landing-content{position:relative;z-index:3;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:16px}.landing-badge{font-size:10px;letter-spacing:1px;color:var(--cyan);text-shadow:2px 2px 0 var(--ink)}.hero-title{font-size:clamp(22px,6vw,40px);line-height:1.7;color:var(--gold);text-shadow:4px 4px 0 var(--ink),0 0 24px rgba(127,227,208,.35);margin:0}.hero-title span{color:var(--cyan)}.hero-sub{font-size:clamp(14px,2.4vw,18px);color:var(--seafoam);max-width:500px;margin:0}.swipe-hint{margin-top:18px;background:var(--coral);border:3px solid var(--ink);color:var(--ink);font-size:11px;letter-spacing:1px;padding:13px 14px;box-shadow:4px 4px 0 var(--ink);animation:hint-bounce 1.8s ease-in-out infinite;cursor:pointer}@keyframes hint-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
