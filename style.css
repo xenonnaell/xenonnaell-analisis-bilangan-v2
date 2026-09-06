@@ -1,0 +1,162 @@
+/* RESET & BASE PIXEL-ART STYLE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Press Start 2P', 'Courier New', monospace; /* Font pixel */
+}
+
+body {
+  background-color: #03132e; /* Warna dasar laut gelap */
+  color: #fff;
+  overflow: hidden; /* Biar ga bisa scroll aneh-aneh pas loading */
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================================
+   LOADING SCREEN 
+   ========================================= */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #020b1a; /* Background loading */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease-out; /* Animasi fade out */
+}
+
+.loading-container {
+  width: 80%;
+  max-width: 400px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Jalur Paus */
+.whale-track {
+  width: 100%;
+  height: 60px;
+  position: relative;
+  margin-bottom: -5px; /* Biar paus nempel sama loading bar */
+}
+
+#loading-whale {
+  height: 50px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transition: left 0.1s linear; /* Biar geraknya smooth */
+  image-rendering: pixelated; /* Mempertahankan pixel-art */
+}
+
+/* Loading Bar Melengkung (Cute Style) */
+.progress-bar-wrapper {
+  width: 100%;
+  height: 25px;
+  background-color: #05214a;
+  border: 3px solid #00e5ff;
+  border-radius: 20px; /* INI BIKIN UJUNGNYA MELENGKUNG */
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.5); /* Efek glow imut */
+}
+
+#progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #008b8b, #00e5ff);
+  border-radius: 15px; /* Mengikuti lengkungan luar */
+  transition: width 0.1s linear;
+}
+
+#loading-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.8rem;
+  color: #00e5ff;
+  text-shadow: 2px 2px #000;
+}
+
+/* Animasi Math Bubbles Berterbangan */
+#math-bubbles-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.math-bubble {
+  position: absolute;
+  color: rgba(0, 229, 255, 0.6);
+  font-size: 1rem;
+  bottom: -20px;
+  animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+/* =========================================
+   LANDING PAGE (ISI BACKGROUND MU DI SINI)
+   ========================================= */
+#landing-page {
+  width: 100vw;
+  height: 100vh;
+  /* MASUKIN BACKGROUND KAMU DI BAWAH SINI */
+  /* background-image: url('background-keren-kamu.png'); */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.hero-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 1.5rem;
+  color: #fff;
+  text-shadow: 3px 3px 0 #005073, -1px -1px 0 #000;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+#explore-btn {
+  background-color: #00e5ff;
+  color: #000;
+  border: 3px solid #fff;
+  border-radius: 10px; /* Agak melengkung biar senada */
+  padding: 15px 20px;
+  font-size: 0.8rem;
+  box-shadow: 0 5px 0 #008b8b;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+#explore-btn:active {
+  transform: translateY(5px);
+  box-shadow: none;
+}
