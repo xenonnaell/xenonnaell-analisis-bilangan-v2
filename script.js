@@ -39,6 +39,25 @@ document.addEventListener('DOMContentLoaded',()=>{
     btn?.addEventListener('click',()=>menu?.classList.contains('open')?close():open());
     $$('.nav-item').forEach(item=>item.addEventListener('click',e=>{e.preventDefault();go(item.dataset.target)}));
     $('#exploreBtn')?.addEventListener('click',()=>go('about'));
+
+    let touchStartX=0,touchStartY=0,touchTracking=false;
+    document.addEventListener('touchstart',e=>{
+      if(menu?.classList.contains('open'))return;
+      touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;touchTracking=true;
+    },{passive:true});
+    document.addEventListener('touchend',e=>{
+      if(!touchTracking)return;touchTracking=false;
+      const dx=e.changedTouches[0].clientX-touchStartX;
+      const dy=e.changedTouches[0].clientY-touchStartY;
+      if(dx<-60&&Math.abs(dx)>Math.abs(dy)*1.5)open();
+    },{passive:true});
+    menu?.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;touchTracking=true},{passive:true});
+    menu?.addEventListener('touchend',e=>{
+      if(!touchTracking)return;touchTracking=false;
+      const dx=e.changedTouches[0].clientX-touchStartX;
+      const dy=e.changedTouches[0].clientY-touchStartY;
+      if(dx>60&&Math.abs(dx)>Math.abs(dy)*1.5)close();
+    },{passive:true});
   })();
 
   (function(){
