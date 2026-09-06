@@ -74,34 +74,45 @@ document.addEventListener('DOMContentLoaded',()=>{
     $('#exploreBtn')?.addEventListener('click',()=>go('calculator'));
   })();
 
-  /* LANDING OCEAN CREATURES — REAL PIXEL FISH, FIXED TO VIEWPORT */
+  /* LANDING OCEAN CREATURES — FIXED, SIDE LANES ONLY */
   (function(){
     const ocean=$('#ambientOcean');if(!ocean)return;
 
-    for(let i=0;i<16;i++){
+    const laneStyle=document.createElement('style');
+    laneStyle.textContent=`
+      #ambientOcean .amb-fish{position:absolute;pointer-events:none;opacity:.58;filter:drop-shadow(2px 2px 0 rgba(6,32,56,.22));will-change:transform;}
+      #ambientOcean .amb-fish.side-left{animation:ambientFishLeft linear infinite;}
+      #ambientOcean .amb-fish.side-right{animation:ambientFishRight linear infinite;}
+      @keyframes ambientFishLeft{0%{transform:translateX(-9vw)}49%{transform:translateX(14vw)}50%{transform:translateX(14vw) scaleX(-1)}99%{transform:translateX(-9vw) scaleX(-1)}100%{transform:translateX(-9vw)}}
+      @keyframes ambientFishRight{0%{transform:translateX(109vw)}49%{transform:translateX(86vw)}50%{transform:translateX(86vw) scaleX(-1)}99%{transform:translateX(109vw) scaleX(-1)}100%{transform:translateX(109vw)}}
+      #ambientOcean .amb-fish img{display:block;width:100%;height:auto;image-rendering:auto;user-select:none;}
+    `;
+    document.head.appendChild(laneStyle);
+
+    for(let i=0;i<12;i++){
       const b=document.createElement('div');b.className='amb-bubble';
       const size=6+Math.random()*14;
       b.style.width=b.style.height=size+'px';
       b.style.left=Math.random()*100+'vw';
-      b.style.setProperty('--drift',(Math.random()*50-25)+'px');
-      b.style.animationDuration=(7+Math.random()*8)+'s';
+      b.style.animationDuration=(8+Math.random()*8)+'s';
       b.style.animationDelay=(Math.random()*8)+'s';
       ocean.appendChild(b);
     }
 
     const fishFiles=['ikankanan1.png','ikankanan2.png','ikankanan3.png','ikankanan4.png','ikankanan5.png'];
-    for(let i=0;i<6;i++){
+    const lanes=[12,28,68,84];
+    for(let i=0;i<4;i++){
       const f=document.createElement('div');
-      f.className='amb-fish';
+      f.className='amb-fish '+(i%2===0?'side-left':'side-right');
       const img=document.createElement('img');
       img.src=fishFiles[i%fishFiles.length];
       img.alt='';
       img.draggable=false;
       f.appendChild(img);
-      f.style.top=(10+Math.random()*76)+'vh';
-      f.style.width=(42+Math.random()*58)+'px';
-      f.style.animationDuration=(18+Math.random()*15)+'s';
-      f.style.animationDelay=(Math.random()*-20)+'s';
+      f.style.top=lanes[i]+'vh';
+      f.style.width=(54+Math.random()*42)+'px';
+      f.style.animationDuration=(20+Math.random()*10)+'s';
+      f.style.animationDelay=(Math.random()*-15)+'s';
       ocean.appendChild(f);
     }
   })();
