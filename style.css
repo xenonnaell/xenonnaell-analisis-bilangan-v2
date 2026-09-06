@@ -2,6 +2,15 @@
 *{box-sizing:border-box}
 html{margin:0;padding:0;scroll-behavior:smooth;background:var(--deep)}
 body{margin:0;padding:0;font-family:'Baloo 2',sans-serif;color:var(--foam);background:linear-gradient(180deg,#0E3A5E 0%,#0B2C4D 55%,#071B30 100%);min-height:100vh;min-height:100dvh;position:relative;overflow-x:hidden;overflow-y:auto}
+.hamburger-btn{position:fixed;top:18px;right:18px;z-index:30;width:50px;height:50px;background:rgba(6,32,56,.75);border:3px solid var(--seafoam);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.hamburger-btn span{display:block;width:24px;height:3px;background:var(--foam);transition:transform .25s ease,opacity .25s ease}
+.hamburger-btn.open span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.hamburger-btn.open span:nth-child(2){opacity:0}
+.hamburger-btn.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+.nav-menu{position:fixed;top:0;right:-100%;bottom:0;z-index:25;width:min(78vw,300px);background:rgba(6,32,56,.97);border-left:3px solid var(--seafoam);display:flex;flex-direction:column;padding:100px 26px 26px;gap:8px;transition:right .3s ease}
+.nav-menu.open{right:0}
+.nav-item{color:var(--foam);text-decoration:none;font-size:17px;font-weight:700;padding:14px 12px;border-radius:4px;border-bottom:2px dashed rgba(127,227,208,.25)}
+.nav-item:active{background:rgba(127,227,208,.15)}
 button,input{font-family:inherit}.pixel-text{font-family:'Press Start 2P',monospace}.pixel-svg{image-rendering:pixelated}
 #loadingScreen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 28%,#164B70 0%,#092B49 48%,#031727 100%);overflow:hidden;opacity:1;visibility:visible;transition:opacity .55s ease,visibility .55s ease}
 #loadingScreen.loading-done{opacity:0;visibility:hidden;pointer-events:none}
