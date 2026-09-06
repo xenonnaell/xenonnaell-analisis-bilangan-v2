@@ -74,22 +74,35 @@ document.addEventListener('DOMContentLoaded',()=>{
     $('#exploreBtn')?.addEventListener('click',()=>go('calculator'));
   })();
 
-  /* FIXED OCEAN FISH + BUBBLES */
+  /* LANDING OCEAN CREATURES — REAL PIXEL FISH, FIXED TO VIEWPORT */
   (function(){
     const ocean=$('#ambientOcean');if(!ocean)return;
-    for(let i=0;i<18;i++){
+
+    for(let i=0;i<16;i++){
       const b=document.createElement('div');b.className='amb-bubble';
-      const size=6+Math.random()*15;b.style.width=b.style.height=size+'px';
-      b.style.left=Math.random()*100+'vw';b.style.setProperty('--drift',(Math.random()*50-25)+'px');
-      b.style.animationDuration=(7+Math.random()*8)+'s';b.style.animationDelay=(Math.random()*8)+'s';ocean.appendChild(b);
+      const size=6+Math.random()*14;
+      b.style.width=b.style.height=size+'px';
+      b.style.left=Math.random()*100+'vw';
+      b.style.setProperty('--drift',(Math.random()*50-25)+'px');
+      b.style.animationDuration=(7+Math.random()*8)+'s';
+      b.style.animationDelay=(Math.random()*8)+'s';
+      ocean.appendChild(b);
     }
-    const colors=['#FF9AA2','#FFD97D','#7FE3D0','#F4FBFB','#9FD1FF'];
+
+    const fishFiles=['ikankanan1.png','ikankanan2.png','ikankanan3.png','ikankanan4.png','ikankanan5.png'];
     for(let i=0;i<6;i++){
-      const f=document.createElement('div');f.className='amb-fish';
-      f.innerHTML=fishSVG(colors[i%colors.length],.72+Math.random()*.55);
-      f.style.top=(8+Math.random()*78)+'vh';
-      f.style.animationDuration=(16+Math.random()*13)+'s';
-      f.style.animationDelay=(Math.random()*-18)+'s';ocean.appendChild(f);
+      const f=document.createElement('div');
+      f.className='amb-fish';
+      const img=document.createElement('img');
+      img.src=fishFiles[i%fishFiles.length];
+      img.alt='';
+      img.draggable=false;
+      f.appendChild(img);
+      f.style.top=(10+Math.random()*76)+'vh';
+      f.style.width=(42+Math.random()*58)+'px';
+      f.style.animationDuration=(18+Math.random()*15)+'s';
+      f.style.animationDelay=(Math.random()*-20)+'s';
+      ocean.appendChild(f);
     }
   })();
 
