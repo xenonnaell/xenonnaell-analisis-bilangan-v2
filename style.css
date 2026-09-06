@@ -1,14 +1,14 @@
 :root{--deep:#0B2C4D;--mid:#123B5E;--teal:#1C6E8C;--seafoam:#7FE3D0;--coral:#FF9AA2;--gold:#FFD97D;--foam:#F4FBFB;--ink:#062038;--sky:#9FE8FF;--cyan:#7FF4FF}
 *{box-sizing:border-box}
-html{margin:0;padding:0;scroll-behavior:smooth;background:var(--deep)}
+html{margin:0;padding:0;scroll-behavior:smooth;background:var(--deep);overflow-x:hidden;width:100%}
 body{margin:0;padding:0;font-family:'Baloo 2',sans-serif;color:var(--foam);background:linear-gradient(180deg,#0E3A5E 0%,#0B2C4D 55%,#071B30 100%);min-height:100vh;min-height:100dvh;position:relative;overflow-x:hidden;overflow-y:auto}
 .hamburger-btn{position:fixed;top:18px;right:18px;z-index:30;width:50px;height:50px;background:rgba(6,32,56,.75);border:3px solid var(--seafoam);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer}
 .hamburger-btn span{display:block;width:24px;height:3px;background:var(--foam);transition:transform .25s ease,opacity .25s ease}
 .hamburger-btn.open span:nth-child(1){transform:translateY(9px) rotate(45deg)}
 .hamburger-btn.open span:nth-child(2){opacity:0}
 .hamburger-btn.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
-.nav-menu{position:fixed;top:0;right:-100%;bottom:0;z-index:25;width:min(78vw,300px);background:rgba(6,32,56,.97);border-left:3px solid var(--seafoam);display:flex;flex-direction:column;padding:100px 26px 26px;gap:8px;transition:right .3s ease}
-.nav-menu.open{right:0}
+.nav-menu{position:fixed;top:0;right:0;bottom:0;z-index:25;width:min(78vw,300px);background:rgba(6,32,56,.97);border-left:3px solid var(--seafoam);display:flex;flex-direction:column;padding:100px 26px 26px;gap:8px;transform:translateX(100%);transition:transform .3s ease}
+.nav-menu.open{transform:translateX(0)}
 .nav-item{color:var(--foam);text-decoration:none;font-size:17px;font-weight:700;padding:14px 12px;border-radius:4px;border-bottom:2px dashed rgba(127,227,208,.25)}
 .nav-item:active{background:rgba(127,227,208,.15)}
 button,input{font-family:inherit}.pixel-text{font-family:'Press Start 2P',monospace}.pixel-svg{image-rendering:pixelated}
