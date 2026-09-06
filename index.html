@@ -8,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260906-loading4">
+  <link rel="stylesheet" href="style.css?v=20260906-final1">
   <style>
     #loadingScreen{background:radial-gradient(circle at 50% 45%,#164b70 0%,#092b49 48%,#031727 100%)!important;overflow:hidden}
     #loadingScreen:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(127,227,208,.025) 0 2px,transparent 2px 6px);pointer-events:none}
     .loading-inner{position:relative;z-index:3;width:min(82vw,520px)!important;gap:28px!important}
-    .loading-brand{font-size:clamp(14px,3vw,22px);color:#ffd97d;text-shadow:4px 4px 0 #062038,0 0 18px rgba(127,227,208,.35)}
+    .loading-brand{font-size:clamp(14px,3vw,22px);color:#ffd97d;text-shadow:4px 4px 0 #062038,0 0 18px rgba(127,227,208,.35);margin-bottom:158px!important;position:relative;z-index:8}
     .loading-track{height:24px!important;border:4px solid #7fe3d0!important;border-radius:999px!important;background:#061c31!important;box-shadow:0 0 0 3px #062038,0 0 20px rgba(127,227,208,.25);overflow:visible!important}
     .loading-bar-fill{height:100%;border-radius:999px!important;background:repeating-linear-gradient(90deg,#7fe3d0 0 12px,#1c6e8c 12px 24px)!important;box-shadow:inset 0 -3px 0 rgba(6,32,56,.35),0 0 10px rgba(127,227,208,.35)}
     #loadingWhale{top:-148px!important;left:50%!important;margin-left:-105px!important;width:210px!important;height:140px!important;display:flex!important;align-items:center!important;justify-content:center!important;z-index:6!important;pointer-events:none!important;will-change:auto!important}
@@ -28,7 +28,14 @@
     .landing-math-symbol{position:absolute;font-family:'Press Start 2P',monospace;color:rgba(255,217,125,.38);text-shadow:2px 2px 0 rgba(6,32,56,.25);animation:landingMathFloat 6s ease-in-out infinite}
     .landing-math-formula{position:absolute;font-family:'Press Start 2P',monospace;color:rgba(159,232,255,.38);text-shadow:2px 2px 0 rgba(6,32,56,.25);font-size:clamp(7px,1.25vw,11px);animation:landingMathFloat 7s ease-in-out infinite}
     @keyframes landingMathFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-9px) rotate(1deg)}}
-    @media(max-width:480px){#loadingWhale{top:-120px!important;margin-left:-82px!important;width:164px!important;height:110px!important}#loadingWhale img{width:164px!important;max-height:110px!important}.loading-progress-fish{width:42px;height:25px;top:-4px}}
+    html{scroll-behavior:smooth}
+    body{overflow-y:auto!important}
+    #pages{position:relative;z-index:1!important}
+    .page{display:block!important;min-height:100vh;min-height:100dvh}
+    .page.active{animation:none!important}
+    .page[data-page="landing"]{position:relative;overflow:hidden;background-image:url('background.png');background-size:cover;background-position:center;background-repeat:no-repeat}
+    .page[data-page="landing"]:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,20,38,.04),rgba(3,20,38,.18) 50%,rgba(3,20,38,.72) 100%);pointer-events:none;z-index:0}
+    @media(max-width:480px){#loadingWhale{top:-122px!important;margin-left:-82px!important;width:164px!important;height:110px!important}#loadingWhale img{width:164px!important;max-height:110px!important}.loading-progress-fish{width:42px;height:25px;top:-4px}.loading-brand{margin-bottom:132px!important}}
   </style>
 </head>
 <body>
@@ -65,17 +72,18 @@
       </div>
     </section>
     <section class="page" data-page="calculator"><div class="page-inner"><h2 class="pixel-text page-title">🧮 Calculator</h2><p class="page-desc">Masukkan bilangan kompleks, lalu tekan ANALYZE.</p><div class="calc-card"><label for="complexInput" class="calc-label">Masukkan bilangan</label><div class="input-row"><input type="text" id="complexInput" class="calc-input" placeholder="contoh: 3+4i atau √12+√-18" autocomplete="off"><button id="analyzeBtn" class="analyze-btn pixel-text" type="button">ANALYZE</button></div><div class="example-chips"><button type="button" class="example-chip" data-example="3+4i">3+4i</button><button type="button" class="example-chip" data-example="√-16">√-16</button><button type="button" class="example-chip" data-example="2√3">2√3</button><button type="button" class="example-chip" data-example="√12+√-18">√12+√-18</button><button type="button" class="example-chip" data-example="√187-√-9087+678">√187-√-9087+678</button></div><div id="errorBox" class="error-box" role="alert"></div><div id="resultBox" class="result-box"><div class="result-z pixel-text" id="outZ">z = ...</div><div class="result-row"><span>Bagian real (a)</span><strong id="outA">-</strong></div><div class="result-row"><span>Bagian imajiner (b)</span><strong id="outB">-</strong></div><div class="result-row"><span>Jenis bilangan</span><strong id="outJenis" class="jenis-badge">-</strong></div></div></div></div></section>
-    <section class="page" data-page="about"><div class="page-inner"><h2 class="pixel-text page-title">📘 About</h2><div class="about-card"><p>Bilangan kompleks terdiri dari bagian <strong>real</strong> dan <strong>imajiner</strong>, ditulis dalam bentuk:</p><p class="formula pixel-text">z = a + bi</p><ul class="about-list"><li><strong>a</strong> adalah bagian real.</li><li><strong>b</strong> adalah koefisien dari bagian imajiner.</li><li><strong>i</strong> adalah satuan imajiner dengan <strong>i² = −1</strong>.</li></ul><p>Website ini mengelompokkan bilangan menjadi empat kategori:</p><div class="classification-grid"><div><strong>ZERO</strong><span>a = 0 dan b = 0</span></div><div><strong>REAL</strong><span>b = 0 dan a ≠ 0</span></div><div><strong>IMAGINARY</strong><span>a = 0 dan b ≠ 0</span></div><div><strong>COMPLEX</strong><span>a ≠ 0 dan b ≠ 0</span></div></div></div><div class="features-wrap"><article class="feature-card"><div class="feature-icon">🪼</div><h3>Berbagai bentuk</h3><p>Angka biasa, i, dan bentuk akar dapat dianalisis.</p></article><article class="feature-card"><div class="feature-icon">√</div><h3>Simbolik</h3><p>Akar disederhanakan tanpa diubah menjadi desimal.</p></article><article class="feature-card"><div class="feature-icon">🐟</div><h3>Interactive</h3><p>Jelajahi dunia bawah laut sambil belajar.</p></article><article class="feature-card"><div class="feature-icon">🐚</div><h3>Mobile first</h3><p>Dirancang nyaman digunakan dari HP Android.</p></article></div></div></section>
     <section class="page" data-page="game"><div class="page-inner game-page-inner"><h2 class="pixel-text page-title">🎮 Fish &amp; Math</h2><p class="page-desc">Gerakkan ikan, makan simbol matematika, dan tumbuh sampai jadi paus.</p><div class="game-hud"><div>SCORE <strong id="gameScore">0</strong></div><div>LEVEL <strong id="gameLevel">1</strong></div></div><div id="gameArea" class="game-area" aria-label="Area permainan"><div id="gameFish" class="game-fish"></div><div id="gameItems" class="game-items"></div><div id="gameHint" class="game-hint">DRAG IKANNYA</div></div><button id="startGame" class="analyze-btn pixel-text" type="button">START GAME</button><div id="gameMessage" class="game-message">Kumpulkan 5 item untuk naik level.</div></div></section>
+    <section class="page" data-page="about"><div class="page-inner"><h2 class="pixel-text page-title">📘 About</h2><div class="about-card"><p>Bilangan kompleks terdiri dari bagian <strong>real</strong> dan <strong>imajiner</strong>, ditulis dalam bentuk:</p><p class="formula pixel-text">z = a + bi</p><ul class="about-list"><li><strong>a</strong> adalah bagian real.</li><li><strong>b</strong> adalah koefisien dari bagian imajiner.</li><li><strong>i</strong> adalah satuan imajiner dengan <strong>i² = −1</strong>.</li></ul><p>Website ini mengelompokkan bilangan menjadi empat kategori:</p><div class="classification-grid"><div><strong>ZERO</strong><span>a = 0 dan b = 0</span></div><div><strong>REAL</strong><span>b = 0 dan a ≠ 0</span></div><div><strong>IMAGINARY</strong><span>a = 0 dan b ≠ 0</span></div><div><strong>COMPLEX</strong><span>a ≠ 0 dan b ≠ 0</span></div></div></div><div class="features-wrap"><article class="feature-card"><div class="feature-icon">🪼</div><h3>Berbagai bentuk</h3><p>Angka biasa, i, dan bentuk akar dapat dianalisis.</p></article><article class="feature-card"><div class="feature-icon">√</div><h3>Simbolik</h3><p>Akar disederhanakan tanpa diubah menjadi desimal.</p></article><article class="feature-card"><div class="feature-icon">🐟</div><h3>Interactive</h3><p>Jelajahi dunia bawah laut sambil belajar.</p></article><article class="feature-card"><div class="feature-icon">🐚</div><h3>Mobile first</h3><p>Dirancang nyaman digunakan dari HP Android.</p></article></div></div></section>
     <section class="page" data-page="credit"><div class="page-inner credit-inner"><h2 class="pixel-text page-title">🐚 Credit</h2><div class="credit-card"><div class="credit-shell">OCEAN<br>COMPLEX LAB</div><p>Project analisis bilangan kompleks yang dikembangkan dari program C menjadi website interaktif bertema underwater retro pixel-art.</p><div class="credit-meta">HTML • CSS • JAVASCRIPT</div></div></div></section>
   </main>
-  <script src="script.js?v=20260906-loading4"></script>
+  <script src="script.js?v=20260906-final1"></script>
   <script>
     document.addEventListener('DOMContentLoaded',()=>{
       const track=document.getElementById('loadingTrack');
       const bar=document.getElementById('loadingBarFill');
       const fish=document.createElement('div');
       const decor=document.getElementById('loadingDecor');
+      fish.id='loadingProgressFish';
       fish.className='loading-progress-fish';
       fish.innerHTML=typeof fishSVG==='function'?fishSVG('#7FE3D0',1):'';
       track?.appendChild(fish);
