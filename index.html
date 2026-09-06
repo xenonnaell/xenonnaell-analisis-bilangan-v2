@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complex Sea - Math World</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Rekomendasi: pakai font pixel dari Google Fonts biar makin retro -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- LOADING SCREEN IMUT -->
+  <div id="loading-screen">
+    <!-- Tempat rumus matematika berterbangan -->
+    <div id="math-bubbles-container"></div>
+    
+    <div class="loading-container">
+      <div class="whale-track">
+        <!-- Pastikan path pauslockscreen.png mu bener ya -->
+        <img id="loading-whale" src="pauslockscreen.png" alt="Paus Lucu">
+      </div>
+      
+      <!-- Loading bar dengan ujung melengkung -->
+      <div class="progress-bar-wrapper">
+        <div id="progress-bar"></div>
+      </div>
+      
+      <div id="loading-text">LOADING<span id="dots">...</span> <span id="progress-percent">0%</span></div>
+    </div>
+  </div>
+
+  <!-- LANDING PAGE (MUNCUL SETELAH LOADING KELAR) -->
+  <div id="app-container" class="hidden">
+    <!-- Nanti background gambar kamu taruh di CSS section ini -->
+    <section id="landing-page">
+      
+      <header>
+        <div class="logo">COMPLEX SEA</div>
+        <button id="hamburger-btn">☰</button>
+      </header>
+
+      <div class="hero-content">
+        <h1>ANALISIS BILANGAN</h1>
+        <p>Jelajahi dunia kompleks di bawah laut!</p>
+        <button id="explore-btn">SWIPE TO EXPLORE</button>
+      </div>
+      
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
