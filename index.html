@@ -8,9 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260906-loading3">
   <style>
-    /* LOADING SCREEN OVERRIDE */
     #loadingScreen{background:radial-gradient(circle at 50% 45%,#164b70 0%,#092b49 48%,#031727 100%)!important;overflow:hidden}
     #loadingScreen:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(127,227,208,.025) 0 2px,transparent 2px 6px);pointer-events:none}
     .loading-inner{position:relative;z-index:3;width:min(82vw,520px)!important;gap:28px!important}
@@ -48,50 +47,19 @@
   <div id="ambientOcean" aria-hidden="true"></div>
   <div class="sand-strip" aria-hidden="true"></div>
   <main id="pages">
-    <section class="page active" data-page="landing">
-      <div class="landing-bg"></div><div class="landing-vignette"></div>
-      <div class="landing-content">
-        <div class="landing-badge pixel-text">MATH • OCEAN • PIXEL WORLD</div>
-        <h1 class="pixel-text hero-title">OCEAN<br><span>COMPLEX LAB</span></h1>
-        <p class="hero-sub">Menyelami bilangan kompleks di kedalaman laut pixel.</p>
-        <button class="swipe-hint pixel-text" id="exploreBtn" type="button">▼ SWIPE TO EXPLORE ▼</button>
-      </div>
-    </section>
+    <section class="page active" data-page="landing"><div class="landing-bg"></div><div class="landing-vignette"></div><div class="landing-content"><div class="landing-badge pixel-text">MATH • OCEAN • PIXEL WORLD</div><h1 class="pixel-text hero-title">OCEAN<br><span>COMPLEX LAB</span></h1><p class="hero-sub">Menyelami bilangan kompleks di kedalaman laut pixel.</p><button class="swipe-hint pixel-text" id="exploreBtn" type="button">▼ SWIPE TO EXPLORE ▼</button></div></section>
     <section class="page" data-page="calculator"><div class="page-inner"><h2 class="pixel-text page-title">🧮 Calculator</h2><p class="page-desc">Masukkan bilangan kompleks, lalu tekan ANALYZE.</p><div class="calc-card"><label for="complexInput" class="calc-label">Masukkan bilangan</label><div class="input-row"><input type="text" id="complexInput" class="calc-input" placeholder="contoh: 3+4i atau √12+√-18" autocomplete="off"><button id="analyzeBtn" class="analyze-btn pixel-text" type="button">ANALYZE</button></div><div class="example-chips"><button type="button" class="example-chip" data-example="3+4i">3+4i</button><button type="button" class="example-chip" data-example="√-16">√-16</button><button type="button" class="example-chip" data-example="2√3">2√3</button><button type="button" class="example-chip" data-example="√12+√-18">√12+√-18</button><button type="button" class="example-chip" data-example="√187-√-9087+678">√187-√-9087+678</button></div><div id="errorBox" class="error-box" role="alert"></div><div id="resultBox" class="result-box"><div class="result-z pixel-text" id="outZ">z = ...</div><div class="result-row"><span>Bagian real (a)</span><strong id="outA">-</strong></div><div class="result-row"><span>Bagian imajiner (b)</span><strong id="outB">-</strong></div><div class="result-row"><span>Jenis bilangan</span><strong id="outJenis" class="jenis-badge">-</strong></div></div></div></div></section>
     <section class="page" data-page="about"><div class="page-inner"><h2 class="pixel-text page-title">📘 About</h2><div class="about-card"><p>Bilangan kompleks terdiri dari bagian <strong>real</strong> dan <strong>imajiner</strong>, ditulis dalam bentuk:</p><p class="formula pixel-text">z = a + bi</p><ul class="about-list"><li><strong>a</strong> adalah bagian real.</li><li><strong>b</strong> adalah koefisien dari bagian imajiner.</li><li><strong>i</strong> adalah satuan imajiner dengan <strong>i² = −1</strong>.</li></ul><p>Website ini mengelompokkan bilangan menjadi empat kategori:</p><div class="classification-grid"><div><strong>ZERO</strong><span>a = 0 dan b = 0</span></div><div><strong>REAL</strong><span>b = 0 dan a ≠ 0</span></div><div><strong>IMAGINARY</strong><span>a = 0 dan b ≠ 0</span></div><div><strong>COMPLEX</strong><span>a ≠ 0 dan b ≠ 0</span></div></div></div><div class="features-wrap"><article class="feature-card"><div class="feature-icon">🪼</div><h3>Berbagai bentuk</h3><p>Angka biasa, i, dan bentuk akar dapat dianalisis.</p></article><article class="feature-card"><div class="feature-icon">√</div><h3>Simbolik</h3><p>Akar disederhanakan tanpa diubah menjadi desimal.</p></article><article class="feature-card"><div class="feature-icon">🐟</div><h3>Interactive</h3><p>Jelajahi dunia bawah laut sambil belajar.</p></article><article class="feature-card"><div class="feature-icon">🐚</div><h3>Mobile first</h3><p>Dirancang nyaman digunakan dari HP Android.</p></article></div></div></section>
     <section class="page" data-page="game"><div class="page-inner game-page-inner"><h2 class="pixel-text page-title">🎮 Fish &amp; Math</h2><p class="page-desc">Gerakkan ikan, makan simbol matematika, dan tumbuh sampai jadi paus.</p><div class="game-hud"><div>SCORE <strong id="gameScore">0</strong></div><div>LEVEL <strong id="gameLevel">1</strong></div></div><div id="gameArea" class="game-area" aria-label="Area permainan"><div id="gameFish" class="game-fish"></div><div id="gameItems" class="game-items"></div><div id="gameHint" class="game-hint">DRAG IKANNYA</div></div><button id="startGame" class="analyze-btn pixel-text" type="button">START GAME</button><div id="gameMessage" class="game-message">Kumpulkan 5 item untuk naik level.</div></div></section>
     <section class="page" data-page="credit"><div class="page-inner credit-inner"><h2 class="pixel-text page-title">🐚 Credit</h2><div class="credit-card"><div class="credit-shell">OCEAN<br>COMPLEX LAB</div><p>Project analisis bilangan kompleks yang dikembangkan dari program C menjadi website interaktif bertema underwater retro pixel-art.</p><div class="credit-meta">HTML • CSS • JAVASCRIPT</div></div></div></section>
   </main>
-  <script src="script.js"></script>
+  <script src="script.js?v=20260906-loading3"></script>
   <script>
-    /* Memastikan bubble asset benar-benar muncul dari paus. */
     document.addEventListener('DOMContentLoaded',()=>{
-      const screen=document.getElementById('loadingScreen');
-      const whale=document.getElementById('loadingWhale');
-      const decor=document.getElementById('loadingDecor');
-      const track=document.getElementById('loadingTrack');
-      if(!screen||!whale||!decor||!track)return;
-      const makeBubble=()=>{
-        if(screen.style.display==='none')return;
-        const r=whale.getBoundingClientRect(), d=decor.getBoundingClientRect();
-        const b=document.createElement('img');
-        b.src='bubble.png'; b.className='loading-bubble';
-        const size=7+Math.random()*15;
-        b.style.width=size+'px';
-        b.style.height='auto';
-        b.style.left=(r.left-d.left+r.width*(.18+Math.random()*.55))+'px';
-        b.style.top=(r.top-d.top+r.height*(.2+Math.random()*.45))+'px';
-        b.style.setProperty('--bubble-drift',(-22+Math.random()*44)+'px');
-        b.style.setProperty('--bubble-rise',(35+Math.random()*65)+'px');
-        b.style.setProperty('--bubble-duration',(1.1+Math.random()*1.1)+'s');
-        decor.appendChild(b);
-        setTimeout(()=>b.remove(),2600);
-      };
-      const timer=setInterval(()=>{
-        for(let i=0;i<2;i++)makeBubble();
-        if(screen.style.display==='none')clearInterval(timer);
-      },420);
-      for(let i=0;i<7;i++)setTimeout(makeBubble,i*130);
+      const screen=document.getElementById('loadingScreen'),whale=document.getElementById('loadingWhale'),decor=document.getElementById('loadingDecor');
+      if(!screen||!whale||!decor)return;
+      const makeBubble=()=>{if(getComputedStyle(screen).display==='none')return;const r=whale.getBoundingClientRect(),d=decor.getBoundingClientRect(),b=document.createElement('img');b.src='bubble.png?v=20260906';b.className='loading-bubble';const s=7+Math.random()*15;b.style.width=s+'px';b.style.left=(r.left-d.left+r.width*(.18+Math.random()*.55))+'px';b.style.top=(r.top-d.top+r.height*(.2+Math.random()*.45))+'px';b.style.setProperty('--bubble-drift',(-22+Math.random()*44)+'px');b.style.setProperty('--bubble-rise',(35+Math.random()*65)+'px');b.style.setProperty('--bubble-duration',(1.1+Math.random()*1.1)+'s');decor.appendChild(b);setTimeout(()=>b.remove(),2600)};
+      const timer=setInterval(()=>{makeBubble();makeBubble();if(getComputedStyle(screen).display==='none')clearInterval(timer)},420);for(let i=0;i<7;i++)setTimeout(makeBubble,i*130);
     });
   </script>
 </body>
