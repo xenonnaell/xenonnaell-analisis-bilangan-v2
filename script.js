@@ -12,6 +12,18 @@ document.addEventListener('DOMContentLoaded',()=>{
     const symbols=['√','i','+','−','×','=','π','z','∞'];
     const positions=[[7,18],[14,70],[27,9],[67,14],[82,23],[91,56],[77,78],[12,49],[58,86]];
     symbols.forEach((text,i)=>{const el=document.createElement('div');el.className='loading-symbol';el.textContent=text;el.style.left=positions[i][0]+'%';el.style.top=positions[i][1]+'%';el.style.fontSize=(11+(i%3)*3)+'px';el.style.animationDelay=(i*.35)+'s';decor.appendChild(el)});
+    const loadingFishColors=['#FF9AA2','#FFD97D','#7FE3D0'];
+    for(let i=0;i<3;i++){
+      const lf=document.createElement('div');
+      lf.className='loading-fish';
+      lf.innerHTML=fishSVG(loadingFishColors[i%loadingFishColors.length],.55);
+      lf.style.top=(18+i*26+Math.random()*8)+'%';
+      lf.style.left=(10+Math.random()*70)+'%';
+      lf.style.animationDuration=(8+Math.random()*5)+'s';
+      lf.style.animationDelay=(Math.random()*-6)+'s';
+      lf.style.opacity='.5';
+      decor.appendChild(lf);
+    }
     function syncFish(percent){const max=Math.max(0,track.clientWidth-fish.offsetWidth);fish.style.left=(Math.max(0,Math.min(100,percent))/100*max)+'px'}
     function addBubble(count=2){const wr=whale.getBoundingClientRect(),sr=screen.getBoundingClientRect();for(let i=0;i<count;i++){const b=document.createElement('img');b.className='loading-bubble';b.src='bubble.png';b.alt='';const size=9+Math.random()*12;b.style.width=size+'px';b.style.height=size+'px';b.style.left=(wr.left-sr.left+wr.width*(.52+Math.random()*.22))+'px';b.style.top=(wr.top-sr.top+wr.height*(.02+Math.random()*.18))+'px';b.style.setProperty('--bubble-drift',(Math.random()*70-35)+'px');b.style.setProperty('--bubble-rise',-(75+Math.random()*90)+'px');b.style.setProperty('--bubble-duration',(1.7+Math.random()*1.1)+'s');decor.appendChild(b);setTimeout(()=>b.remove(),3200)}}
     let percent=0;const started=performance.now(),duration=3000;const bubbleTimer=setInterval(()=>addBubble(Math.random()>.4?2:3),600);
@@ -31,15 +43,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   (function(){
     const ocean=$('#ambientOcean');if(!ocean)return;
-    const pageRoot=$('#pages');
-    function sizeOcean(){
-      const height=pageRoot?.scrollHeight||document.documentElement.scrollHeight||document.body.scrollHeight;
-      ocean.style.height=height+'px';
-    }
-    sizeOcean();
-    window.addEventListener('resize',sizeOcean);
-    window.addEventListener('load',sizeOcean);
-    if(window.ResizeObserver&&pageRoot)new ResizeObserver(sizeOcean).observe(pageRoot);
 
     for(let i=0;i<14;i++){
       const b=document.createElement('div');
@@ -67,7 +70,20 @@ document.addEventListener('DOMContentLoaded',()=>{
       f.style.opacity=(.35+Math.random()*.2).toFixed(2);
       ocean.appendChild(f);
     }
-    sizeOcean();
+
+    const jellySpots=[{left:'74%',top:'16%',size:64,dur:'5.5s',delay:'0s',opacity:.85},{left:'20%',top:'42%',size:44,dur:'7s',delay:'-3s',opacity:.7}];
+    jellySpots.forEach(spot=>{
+      const j=document.createElement('div');
+      j.className='amb-jelly';
+      j.innerHTML='<img src="ubur-ubur.png" alt="">';
+      j.style.left=spot.left;
+      j.style.top=spot.top;
+      j.style.width=spot.size+'px';
+      j.style.opacity=spot.opacity;
+      j.style.animationDuration=spot.dur;
+      j.style.animationDelay=spot.delay;
+      ocean.appendChild(j);
+    });
   })();
 
   function simplify(n){let r=Math.abs(Math.trunc(n)),f=1;for(let i=2;i*i<=r;i++)while(r%(i*i)===0){r/=i*i;f*=i}return{factor:f,remainder:r}}
