@@ -38,13 +38,22 @@ document.addEventListener('DOMContentLoaded',()=>{
     function go(id){const target=document.getElementById(id);if(target)window.scrollTo({top:target.offsetTop,behavior:'smooth'});close()}
     btn?.addEventListener('click',()=>menu?.classList.contains('open')?close():open());
     $$('.nav-item').forEach(item=>item.addEventListener('click',e=>{e.preventDefault();go(item.dataset.target)}));
-    $('#exploreBtn')?.addEventListener('click',()=>go('calculator'));
+    $('#exploreBtn')?.addEventListener('click',()=>go('about'));
   })();
 
   (function(){
     const ocean=$('#ambientOcean');if(!ocean)return;
+    const pageRoot=$('#pages');
+    function sizeOcean(){
+      const height=pageRoot?.scrollHeight||document.documentElement.scrollHeight||document.body.scrollHeight;
+      ocean.style.height=height+'px';
+    }
+    sizeOcean();
+    window.addEventListener('resize',sizeOcean);
+    window.addEventListener('load',sizeOcean);
+    if(window.ResizeObserver&&pageRoot)new ResizeObserver(sizeOcean).observe(pageRoot);
 
-    for(let i=0;i<14;i++){
+    for(let i=0;i<26;i++){
       const b=document.createElement('div');
       b.className='amb-bubble';
       const size=5+Math.random()*10;
@@ -58,11 +67,11 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
 
     const colors=['#FF9AA2','#FFD97D','#7FE3D0','#F4FBFB'];
-    for(let i=0;i<10;i++){
+    for(let i=0;i<22;i++){
       const f=document.createElement('div');
       f.className='amb-fish '+(i%2===0?'fish-left':'fish-right');
       f.innerHTML=fishSVG(colors[i%colors.length],.42+Math.random()*.12);
-      f.style.top=(5+(i*9.2)+Math.random()*4)+'%';
+      f.style.top=(3+(i*4.4)+Math.random()*3)+'%';
       f.style.width=(22+Math.random()*12)+'px';
       f.style.height='auto';
       f.style.animationDuration=(20+Math.random()*16)+'s';
@@ -71,19 +80,20 @@ document.addEventListener('DOMContentLoaded',()=>{
       ocean.appendChild(f);
     }
 
-    const jellySpots=[{left:'74%',top:'16%',size:64,dur:'5.5s',delay:'0s',opacity:.85},{left:'20%',top:'42%',size:44,dur:'7s',delay:'-3s',opacity:.7}];
-    jellySpots.forEach(spot=>{
+    for(let i=0;i<9;i++){
       const j=document.createElement('div');
       j.className='amb-jelly';
       j.innerHTML='<img src="ubur-ubur.png" alt="">';
-      j.style.left=spot.left;
-      j.style.top=spot.top;
-      j.style.width=spot.size+'px';
-      j.style.opacity=spot.opacity;
-      j.style.animationDuration=spot.dur;
-      j.style.animationDelay=spot.delay;
+      const size=32+Math.random()*40;
+      j.style.width=size+'px';
+      j.style.left=(4+Math.random()*90)+'%';
+      j.style.setProperty('--jelly-drift',(10+Math.random()*24)+'px');
+      j.style.animationDuration=(9+Math.random()*9)+'s';
+      j.style.animationDelay=(Math.random()*-16)+'s';
       ocean.appendChild(j);
-    });
+    }
+
+    sizeOcean();
   })();
 
   function simplify(n){let r=Math.abs(Math.trunc(n)),f=1;for(let i=2;i*i<=r;i++)while(r%(i*i)===0){r/=i*i;f*=i}return{factor:f,remainder:r}}
