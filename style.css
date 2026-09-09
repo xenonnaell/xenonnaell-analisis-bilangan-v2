@@ -41,11 +41,8 @@ button,input{font-family:inherit}.pixel-text{font-family:'Press Start 2P',monosp
 @keyframes jelly-rise{0%{transform:translate(0,50px) rotate(0deg);opacity:.55}50%{transform:translate(var(--jelly-drift,15px),-90px) rotate(4deg);opacity:.95}100%{transform:translate(calc(var(--jelly-drift,15px) * -1),50px) rotate(-4deg);opacity:.55}}
 .amb-bubble{position:absolute;bottom:-30px;border-radius:50%;border:2px solid rgba(127,227,208,.25);box-shadow:inset -2px -2px 0 rgba(255,255,255,.12);animation:amb-rise linear infinite}
 @keyframes amb-rise{0%{transform:translate(0,0);opacity:.5}100%{transform:translate(var(--drift,20px),-115vh);opacity:0}}
-.amb-fish{position:absolute;opacity:.45;filter:drop-shadow(1px 1px 0 rgba(6,32,56,.25));will-change:transform;pointer-events:none;width:34px}
-.amb-fish img{display:block;width:100%;height:auto;image-rendering:auto;user-select:none;pointer-events:none}
-.amb-fish.fish-left{animation:swim-crossing-left linear infinite}.amb-fish.fish-right{animation:swim-crossing-right linear infinite}
-@keyframes swim-crossing-left{0%{transform:translateX(112vw) scaleX(-1)}100%{transform:translateX(-20vw) scaleX(-1)}}
-@keyframes swim-crossing-right{0%{transform:translateX(-20vw) scaleX(1)}100%{transform:translateX(112vw) scaleX(1)}}
+.amb-fish{position:absolute;opacity:.55;filter:drop-shadow(1px 1px 0 rgba(6,32,56,.25));will-change:transform;pointer-events:none;width:34px;animation:amb-swim linear infinite}
+@keyframes amb-swim{0%{transform:translateX(-10vw) scaleX(1)}49%{transform:translateX(105vw) scaleX(1)}50%{transform:translateX(105vw) scaleX(-1)}99%{transform:translateX(-10vw) scaleX(-1)}100%{transform:translateX(-10vw) scaleX(1)}}
 #pages{position:relative;z-index:2}
 .page{display:block;position:relative;min-height:100vh;min-height:100dvh}
 .page:not(.landing-page)::before{content:"";position:absolute;top:0;left:0;right:0;height:10px;background:repeating-linear-gradient(135deg,var(--seafoam) 0 8px,transparent 8px 16px);opacity:.3;pointer-events:none;z-index:1}
