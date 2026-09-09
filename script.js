@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   })();
 
   (function(){
-    const btn=$('#hamburgerBtn'),menu=$('#navMenu');
+    const btn=$('#hamburgerBtn'),menu=$('#navMenu'),landing=$('#landing');
     function close(){menu?.classList.remove('open');btn?.classList.remove('open');btn?.setAttribute('aria-expanded','false')}
     function open(){menu?.classList.add('open');btn?.classList.add('open');btn?.setAttribute('aria-expanded','true')}
     function go(id){const target=document.getElementById(id);if(target)window.scrollTo({top:target.offsetTop,behavior:'smooth'});close()}
@@ -40,23 +40,24 @@ document.addEventListener('DOMContentLoaded',()=>{
     $$('.nav-item').forEach(item=>item.addEventListener('click',e=>{e.preventDefault();go(item.dataset.target)}));
     $('#exploreBtn')?.addEventListener('click',()=>go('about'));
 
-    let touchStartX=0,touchStartY=0,touchTracking=false;
-    document.addEventListener('touchstart',e=>{
-      if(menu?.classList.contains('open'))return;
-      touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;touchTracking=true;
-    },{passive:true});
-    document.addEventListener('touchend',e=>{
-      if(!touchTracking)return;touchTracking=false;
-      const dx=e.changedTouches[0].clientX-touchStartX;
-      const dy=e.changedTouches[0].clientY-touchStartY;
-      if(dx<-60&&Math.abs(dx)>Math.abs(dy)*1.5)open();
-    },{passive:true});
-    menu?.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;touchTracking=true},{passive:true});
+    let sx=0,sy=0,tracking=false;
+    if(landing){
+      landing.addEventListener('touchstart',e=>{
+        if(menu?.classList.contains('open'))return;
+        if(e.target.closest('button,a,input'))return;
+        sx=e.touches[0].clientX;sy=e.touches[0].clientY;tracking=true;
+      },{passive:true});
+      landing.addEventListener('touchend',e=>{
+        if(!tracking)return;tracking=false;
+        const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+        if(dx<-70&&Math.abs(dx)>Math.abs(dy)*2)open();
+      },{passive:true});
+    }
+    menu?.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;tracking=true},{passive:true});
     menu?.addEventListener('touchend',e=>{
-      if(!touchTracking)return;touchTracking=false;
-      const dx=e.changedTouches[0].clientX-touchStartX;
-      const dy=e.changedTouches[0].clientY-touchStartY;
-      if(dx>60&&Math.abs(dx)>Math.abs(dy)*1.5)close();
+      if(!tracking)return;tracking=false;
+      const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+      if(dx>70&&Math.abs(dx)>Math.abs(dy)*2)close();
     },{passive:true});
   })();
 
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     window.addEventListener('load',sizeOcean);
     if(window.ResizeObserver&&pageRoot)new ResizeObserver(sizeOcean).observe(pageRoot);
 
-    for(let i=0;i<26;i++){
+    for(let i=0;i<16;i++){
       const b=document.createElement('div');
       b.className='amb-bubble';
       const size=5+Math.random()*10;
@@ -86,11 +87,11 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
 
     const colors=['#FF9AA2','#FFD97D','#7FE3D0','#F4FBFB'];
-    for(let i=0;i<42;i++){
+    for(let i=0;i<24;i++){
       const f=document.createElement('div');
       f.className='amb-fish '+(i%2===0?'fish-left':'fish-right');
       f.innerHTML=fishSVG(colors[i%colors.length],.45+Math.random()*.16);
-      f.style.top=(2+(i*2.3)+Math.random()*2)+'%';
+      f.style.top=(2+(i*4)+Math.random()*3)+'%';
       f.style.width=(24+Math.random()*14)+'px';
       f.style.height='auto';
       f.style.animationDuration=(16+Math.random()*14)+'s';
@@ -99,14 +100,14 @@ document.addEventListener('DOMContentLoaded',()=>{
       ocean.appendChild(f);
     }
 
-    for(let i=0;i<14;i++){
+    for(let i=0;i<8;i++){
       const j=document.createElement('div');
       j.className='amb-jelly';
       j.innerHTML='<img src="ubur-ubur.png" alt="">';
-      const size=32+Math.random()*40;
+      const size=32+Math.random()*36;
       j.style.width=size+'px';
       j.style.left=(4+Math.random()*90)+'%';
-      j.style.top=(3+(i*(94/14))+Math.random()*4)+'%';
+      j.style.top=(3+(i*(94/8))+Math.random()*4)+'%';
       j.style.setProperty('--jelly-drift',(10+Math.random()*24)+'px');
       j.style.animationDuration=(9+Math.random()*9)+'s';
       j.style.animationDelay=(Math.random()*-16)+'s';
@@ -127,5 +128,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   (function(){const input=$('#complexInput'),button=$('#analyzeBtn'),result=$('#resultBox'),error=$('#errorBox');if(!input||!button)return;function run(){result.style.display='none';error.style.display='none';try{const x=analyze(input.value.trim());$('#outZ').textContent='z = '+x.z;$('#outA').textContent=x.a;$('#outB').textContent=x.b;$('#outJenis').textContent=x.jenis;$('#outJenis').className='jenis-badge jenis-'+x.jenis.toLowerCase();result.style.display='block'}catch(ex){error.textContent=ex.message;error.style.display='block'}}button.addEventListener('click',run);input.addEventListener('keydown',e=>{if(e.key==='Enter')run()});$$('.example-chip').forEach(chip=>chip.addEventListener('click',()=>{input.value=chip.dataset.example;run();input.focus()}))})();
   (function(){const area=$('#gameArea'),fish=$('#gameFish'),items=$('#gameItems'),start=$('#startGame'),score=$('#gameScore'),level=$('#gameLevel'),message=$('#gameMessage'),hint=$('#gameHint');if(!area||!fish||!items||!start)return;const g={running:false,score:0,level:1,x:.15,y:.5,pointerId:null,items:[],raf:0};
     const fishStages=[{src:'ikankanan1.png',size:42},{src:'ikankanan2.png',size:54},{src:'ikankanan3.png',size:66},{src:'ikankanan4.png',size:80},{src:'ikankanan5.png',size:96},{src:'pauslockscreen.png',size:150}];
-    function draw(){const idx=Math.min(g.level-1,fishStages.length-1),stage=fishStages[idx];fish.innerHTML='<img src="'+stage.src+'" alt="" style="width:100%;height:100%;object-fit:contain;display:block">';fish.style.width=stage.size+'px';fish.style.height=stage.size+'px';fish.style.left=g.x*100+'%';fish.style.top=g.y*100+'%'}function spawn(){if(!g.running||g.items.length>=8)return;const el=document.createElement('div');el.className='math-item';el.textContent=['+','√','i','2','3','='][Math.floor(Math.random()*6)];el.style.left=(9+Math.random()*82)+'%';el.style.top=(14+Math.random()*72)+'%';items.appendChild(el);g.items.push(el)}function hit(a,b){return!(a.right<b.left||a.left>b.right||a.bottom<b.top||a.top>b.bottom)}function tick(){if(!g.running)return;const rect=fish.getBoundingClientRect();for(let i=g.items.length-1;i>=0;i--){const el=g.items[i];if(hit(rect,el.getBoundingClientRect())){el.remove();g.items.splice(i,1);g.score++;g.level=Math.floor(g.score/5)+1;draw();score.textContent=g.score;level.textContent=g.level;message.textContent=g.level>=6?'PAUS MODE! Kamu sudah jadi raksasa laut.':'Kumpulkan '+g.level*5+' item untuk naik level.'}}g.raf=requestAnimationFrame(tick)}function reset(){g.running=true;g.score=0;g.level=1;g.x=.15;g.y=.5;g.items.forEach(x=>x.remove());g.items=[];score.textContent='0';level.textContent='1';message.textContent='Kumpulkan 5 item untuk naik level.';start.textContent='RESTART GAME';draw();for(let i=0;i<5;i++)spawn();cancelAnimationFrame(g.raf);g.raf=requestAnimationFrame(tick)}function move(x,y){const r=area.getBoundingClientRect();g.x=Math.max(.08,Math.min(.92,(x-r.left)/r.width));g.y=Math.max(.12,Math.min(.88,(y-r.top)/r.height));draw()}start.addEventListener('click',reset);area.addEventListener('pointerdown',e=>{if(!g.running)return;g.pointerId=e.pointerId;area.setPointerCapture(e.pointerId);hint.style.display='none';move(e.clientX,e.clientY)});area.addEventListener('pointermove',e=>{if(e.pointerId===g.pointerId)move(e.clientX,e.clientY)});const end=e=>{if(e.pointerId===g.pointerId)g.pointerId=null};area.addEventListener('pointerup',end);area.addEventListener('pointercancel',end);setInterval(()=>g.running&&spawn(),1100);draw()})();
+    let currentStageIdx=-1;
+    function updateSprite(){const idx=Math.min(g.level-1,fishStages.length-1);if(idx===currentStageIdx)return;currentStageIdx=idx;const stage=fishStages[idx];fish.innerHTML='<img src="'+stage.src+'" alt="" style="width:100%;height:100%;object-fit:contain;display:block">';fish.style.width=stage.size+'px';fish.style.height=stage.size+'px'}
+    function positionFish(){fish.style.left=g.x*100+'%';fish.style.top=g.y*100+'%'}
+    function draw(){updateSprite();positionFish()}
+    function spawn(){if(!g.running||g.items.length>=8)return;const el=document.createElement('div');el.className='math-item';el.textContent=['+','√','i','2','3','='][Math.floor(Math.random()*6)];el.style.left=(9+Math.random()*82)+'%';el.style.top=(14+Math.random()*72)+'%';items.appendChild(el);g.items.push(el)}function hit(a,b){return!(a.right<b.left||a.left>b.right||a.bottom<b.top||a.top>b.bottom)}function tick(){if(!g.running)return;const rect=fish.getBoundingClientRect();for(let i=g.items.length-1;i>=0;i--){const el=g.items[i];if(hit(rect,el.getBoundingClientRect())){el.remove();g.items.splice(i,1);g.score++;g.level=Math.floor(g.score/5)+1;draw();score.textContent=g.score;level.textContent=g.level;message.textContent=g.level>=6?'PAUS MODE! Kamu sudah jadi raksasa laut.':'Kumpulkan '+g.level*5+' item untuk naik level.'}}g.raf=requestAnimationFrame(tick)}function reset(){g.running=true;g.score=0;g.level=1;g.x=.15;g.y=.5;g.items.forEach(x=>x.remove());g.items=[];currentStageIdx=-1;score.textContent='0';level.textContent='1';message.textContent='Kumpulkan 5 item untuk naik level.';start.textContent='RESTART GAME';draw();for(let i=0;i<5;i++)spawn();cancelAnimationFrame(g.raf);g.raf=requestAnimationFrame(tick)}function move(x,y){const r=area.getBoundingClientRect();g.x=Math.max(.08,Math.min(.92,(x-r.left)/r.width));g.y=Math.max(.12,Math.min(.88,(y-r.top)/r.height));positionFish()}start.addEventListener('click',reset);area.addEventListener('pointerdown',e=>{if(!g.running)return;g.pointerId=e.pointerId;area.setPointerCapture(e.pointerId);hint.style.display='none';move(e.clientX,e.clientY)});area.addEventListener('pointermove',e=>{if(e.pointerId===g.pointerId)move(e.clientX,e.clientY)});const end=e=>{if(e.pointerId===g.pointerId)g.pointerId=null};area.addEventListener('pointerup',end);area.addEventListener('pointercancel',end);setInterval(()=>g.running&&spawn(),1100);draw()})();
 });
