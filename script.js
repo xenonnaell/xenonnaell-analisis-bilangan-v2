@@ -87,27 +87,27 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
 
     const colors=['#FF9AA2','#FFD97D','#7FE3D0','#F4FBFB'];
-    for(let i=0;i<24;i++){
+    for(let i=0;i<32;i++){
       const f=document.createElement('div');
-      f.className='amb-fish '+(i%2===0?'fish-left':'fish-right');
+      f.className='amb-fish';
       f.innerHTML=fishSVG(colors[i%colors.length],.45+Math.random()*.16);
-      f.style.top=(2+(i*4)+Math.random()*3)+'%';
+      f.style.top=(2+(i*3)+Math.random()*2.5)+'%';
       f.style.width=(24+Math.random()*14)+'px';
       f.style.height='auto';
-      f.style.animationDuration=(16+Math.random()*14)+'s';
+      f.style.animationDuration=(14+Math.random()*12)+'s';
       f.style.animationDelay=(Math.random()*-24)+'s';
       f.style.opacity=(.5+Math.random()*.25).toFixed(2);
       ocean.appendChild(f);
     }
 
-    for(let i=0;i<8;i++){
+    for(let i=0;i<12;i++){
       const j=document.createElement('div');
       j.className='amb-jelly';
       j.innerHTML='<img src="ubur-ubur.png" alt="">';
       const size=32+Math.random()*36;
       j.style.width=size+'px';
       j.style.left=(4+Math.random()*90)+'%';
-      j.style.top=(3+(i*(94/8))+Math.random()*4)+'%';
+      j.style.top=(3+(i*(94/12))+Math.random()*4)+'%';
       j.style.setProperty('--jelly-drift',(10+Math.random()*24)+'px');
       j.style.animationDuration=(9+Math.random()*9)+'s';
       j.style.animationDelay=(Math.random()*-16)+'s';
